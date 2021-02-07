@@ -1,0 +1,5 @@
+ansible
+ansible-lint
+yamllint
+pytest
+flake8
