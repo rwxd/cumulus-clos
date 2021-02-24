@@ -1,0 +1,23 @@
+all:
+  children:
+    leaf:
+      hosts:
+        leaf01:
+        leaf02:
+        leaf03:
+        leaf04:
+    spine:
+      hosts:
+        spine01:
+        spine02:
+        spine03:
+        spine04:
+    borderleaf:
+      hosts:
+        border01:
+        border02:
+  vars:
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cumulus@worker21.air.cumulusnetworks.com -p 26860"'
+    ansible_user: cumulus
+    ansible_password: CumulusLinux!
+    ansible_python_interpreter: /usr/bin/python3
