@@ -1,4 +1,4 @@
-- name: Configure switches
+- name: Configure bgp
   hosts: all
   gather_facts: False
   tasks:
