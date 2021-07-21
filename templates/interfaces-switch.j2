@@ -2,8 +2,17 @@
 
 # Defaults
 
-auto lo
-iface lo inet loopback
+{% for loopback in interfaces.loopbacks %}
+auto {{ loopback.name }}
+iface {{ loopback.name }} inet loopback
+{% if "description" in loopback %}
+    alias {{ loopback.description }}
+{% endif %}
+{% for ip in loopback.ip_addresses %}
+    address {{ ip }}
+{% endfor %}
+
+{% endfor %}
 
 auto mgmt
 iface mgmt

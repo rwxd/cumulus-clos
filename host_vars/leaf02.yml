@@ -1,4 +1,6 @@
 ---
+role: leaf
+
 interfaces:
   physicals:
     - name: swp51
@@ -9,18 +11,18 @@ interfaces:
     - name: swp52
       description: spine02
       enabled: false
-      mode: uplink
 
+      # mode: uplink
     - name: swp53
       description: spine03
       enabled: false
-      mode: uplink
 
+      # mode: uplink
     - name: swp54
       description: spine04
       enabled: false
-      mode: uplink
 
+      # mode: uplink
     - name: swp1
       description: server01
       mode: access
@@ -39,22 +41,31 @@ interfaces:
       mode: access
       untagged_vlan: 11
 
+  loopbacks:
+    - name: lo
+      description: Loopback
+      ip_addresses:
+        - 10.0.0.2/32
+
   vlans:
     - name: vlan10
       description: server01
       vlan_id: 10
-      vrf: test_vrf
+      vrf: lab
       ip_addresses:
         - 192.168.1.2/24
 
     - name: vlan11
       description: server02
       vlan_id: 11
-      vrf: test_vrf
+      vrf: lab
       ip_addresses:
         - 192.168.2.2/24
   bridges:
     - name: bridge
 
   vrfs:
-    - name: test_vrf
+    - name: lab
+      l3vni: 403346
+bgp:
+  asn: 65002

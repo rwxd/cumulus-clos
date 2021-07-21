@@ -1,0 +1,28 @@
+{% set router_id = ((interfaces.loopbacks[0].ip_addresses | ipv4() )[0] | split("/") )[0] %}
+router bgp {{ bgp.asn }}
+ bgp router-id {{ router_id }}
+ bgp bestpath as-path multipath-relax
+ bgp bestpath compare-routerid
+ neighbor FABRIC peer-group
+ neighbor FABRIC remote-as external
+ neighbor FABRIC bfd 5 200 200
+ {% for swp in interfaces.physicals if "mode" in swp and swp.mode in ["uplink", "downlink"] %}
+ neighbor {{ swp.name }} interface peer-group FABRIC
+ {% endfor %}
+ !
+ address-family ipv4 unicast
+  redistribute connected route-map rm_LOOPBACK_ONLY
+  neighbor FABRIC activate
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  redistribute connected route-map rm_LOOPBACK_ONLY
+  neighbor FABRIC activate
+ exit-address-family
+ !
+!
+{% for vrf in interfaces.vrfs %}
+router bgp {{ bgp.asn }} vrf {{ vrf.name }}
+ bgp router-id {{ router_id }}
+!
+{% endfor %}

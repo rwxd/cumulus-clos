@@ -1,3 +1,5 @@
+role: spine
+
 interfaces:
   physicals:
     - name: swp1
@@ -10,10 +12,18 @@ interfaces:
       enabled: true
       mode: downlink
 
+  loopbacks:
+    - name: lo
+      description: Loopback
+      ip_addresses:
+        - 10.0.0.11/32
+
   vlans: []
 
   bridges:
     - name: bridge
 
-  vrfs:
-    - name: test_vrf
+  vrfs: []
+
+bgp:
+  asn: 65100

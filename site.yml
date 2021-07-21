@@ -7,6 +7,19 @@
     - name: Interface tasks
       include_tasks:
         file: tasks/interfaces.yml
+        apply:
+          tags:
+            - interfaces
+
+    - name: Routing tasks
+      include_tasks:
+        file: tasks/frr.yml
+        apply:
+          tags:
+            - frr
+      when: "'server' not in inventory_hostname"
+      tags:
+        - frr
 
     - name: Server tasks
       include_tasks:

@@ -4,3 +4,4 @@ yamllint
 pytest
 flake8
 pynetbox
+netaddr

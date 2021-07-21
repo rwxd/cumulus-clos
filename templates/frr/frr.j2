@@ -1,0 +1,18 @@
+### Ansible managed
+# default to using syslog. /etc/rsyslog.d/45-frr.conf places the log
+# in /var/log/frr/frr.log
+frr version 7.0+cl4u3
+frr defaults datacenter
+hostname {{ inventory_hostname }}
+log syslog informational
+service integrated-vtysh-config
+!
+{% if role != 'spine' %}
+{% include '/frr/vrfs.j2' %}
+{% endif %}
+{% include '/frr/slaac.j2' %}
+{% include '/frr/bgp.j2' %}
+{% include '/frr/route-maps.j2' %}
+{{''}}
+line vty
+!

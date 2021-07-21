@@ -1,0 +1,52 @@
+- name: deploy new frr configutation
+  block:
+    - name: create frr config
+      template:
+        src: frr/frr.j2
+        dest: /etc/frr/frr.conf
+        owner: frr
+        group: frr
+        mode: "0640"
+        backup: true
+        validate: /usr/lib/frr/bgpd -f %s -C
+      diff: true
+      register: change_frr
+
+    - name: activate frr bgp option
+      template:
+        src: frr/daemons.j2
+        dest: /etc/frr/daemons
+        owner: frr
+        group: frr
+        mode: "0640"
+        backup: true
+      diff: true
+      register: change_daemons
+
+    - name: apply frr configuration
+      service:
+        name: frr
+        state: reloaded
+        enabled: true
+      register: validate_frr
+      when:
+        - change_frr.changed or change_daemons.changed
+  rescue:
+    - name: reset frr configuration
+      copy:
+        remote_src: true
+        src: "{{ change_frr.backup_file }}"
+        dest: /etc/frr/frr.conf
+        owner: frr
+        group: frr
+        mode: "0640"
+        backup: true
+
+    - name: delete backup
+      file:
+        path: "{{ change_frr.backup_file }}"
+        state: absent
+
+    - name: error in frr
+      fail:
+        msg: "Error in frr config /etc/frr/frr.conf"

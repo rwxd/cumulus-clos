@@ -1,0 +1,6 @@
+{% for vrf in interfaces.vrfs %}
+vrf {{ vrf.name }}
+ vni {{ vrf.l3vni|default('auto') }}
+ exit-vrf
+!
+{% endfor %}
