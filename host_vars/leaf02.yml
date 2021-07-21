@@ -1,0 +1,60 @@
+---
+interfaces:
+  physicals:
+    - name: swp51
+      description: spine01
+      enabled: true
+      mode: uplink
+
+    - name: swp52
+      description: spine02
+      enabled: false
+      mode: uplink
+
+    - name: swp53
+      description: spine03
+      enabled: false
+      mode: uplink
+
+    - name: swp54
+      description: spine04
+      enabled: false
+      mode: uplink
+
+    - name: swp1
+      description: server01
+      mode: access
+      enabled: true
+      untagged_vlan: 10
+
+    - name: swp2
+      description: server02
+      enabled: true
+      mode: access
+      untagged_vlan: 10
+
+    - name: swp3
+      description: server03
+      enabled: true
+      mode: access
+      untagged_vlan: 11
+
+  vlans:
+    - name: vlan10
+      description: server01
+      vlan_id: 10
+      vrf: test_vrf
+      ip_addresses:
+        - 192.168.1.2/24
+
+    - name: vlan11
+      description: server02
+      vlan_id: 11
+      vrf: test_vrf
+      ip_addresses:
+        - 192.168.2.2/24
+  bridges:
+    - name: bridge
+
+  vrfs:
+    - name: test_vrf

@@ -16,8 +16,13 @@ all:
       hosts:
         border01:
         border02:
+    server:
+      hosts:
+        server01:
+        server02:
+        server03:
   vars:
-    ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cumulus@worker21.air.cumulusnetworks.com -p 26860"'
+    #ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cumulus@worker21.air.cumulusnetworks.com -p 26860"'
     ansible_user: cumulus
     ansible_password: CumulusLinux!
     ansible_python_interpreter: /usr/bin/python3

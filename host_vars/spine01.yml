@@ -1,0 +1,19 @@
+interfaces:
+  physicals:
+    - name: swp1
+      description: leaf01
+      enabled: true
+      mode: downlink
+
+    - name: swp2
+      description: leaf02
+      enabled: true
+      mode: downlink
+
+  vlans: []
+
+  bridges:
+    - name: bridge
+
+  vrfs:
+    - name: test_vrf

@@ -1,0 +1,17 @@
+- name: Install lldpd and snmpd
+  apt:
+    pkg:
+      - lldpd
+      - snmpd
+
+- name: Enable and start lldpd
+  systemd:
+    name: lldpd.service
+    state: started
+    enabled: yes
+
+- name: Enable and start snmpd
+  systemd:
+    name: snmpd.service
+    state: started
+    enabled: yes

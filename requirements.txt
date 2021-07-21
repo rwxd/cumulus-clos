@@ -3,5 +3,4 @@ ansible-lint
 yamllint
 pytest
 flake8
-cryptography==2.8
 pynetbox

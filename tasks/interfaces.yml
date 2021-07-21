@@ -1,0 +1,50 @@
+- name: Set server interfaces template
+  set_fact:
+    interface_template: "interfaces-server.j2"
+  when: "'server' in inventory_hostname"
+
+- name: Set switch interfaces template
+  set_fact:
+    interface_template: "interfaces-switch.j2"
+  when: "'server' not in inventory_hostname"
+
+- name: deploy new interface configuration
+  block:
+    - name: generate interfaces configuration
+      template:
+        src: "{{ interface_template }}"
+        dest: /etc/network/interfaces
+        owner: root
+        group: root
+        mode: "0644"
+        backup: true
+      diff: true
+      register: change_interfaces
+      tags:
+        - interfaces
+
+    - name: apply interfaces configuration
+      command:
+        cmd: /sbin/ifreload --all
+      register: validate_interfaces
+      when:
+        - change_interfaces.changed
+
+  rescue:
+    - name: reset interfaces configuration
+      copy:
+        remote_src: true
+        src: "{{ change_interfaces.backup_file }}"
+        dest: /etc/network/interfaces
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: delete backup
+      file:
+        path: "{{ change_interfaces.backup_file }}"
+        state: absent
+
+    - name: error in interfaces
+      fail:
+        msg: "Error in interfaces config /etc/network/interfaces"

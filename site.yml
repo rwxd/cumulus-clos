@@ -1,12 +1,14 @@
-- name: Configure bgp
-  hosts: all
-  gather_facts: False
+---
+- name: Configure devices
+  hosts: leaf01, leaf02, spine01, server01, server02, server03
+  gather_facts: false
+  become: yes
   tasks:
-    - name: Gather facts
-      ansible.builtin.setup:
-        gather_subset: "network"
+    - name: Interface tasks
+      include_tasks:
+        file: tasks/interfaces.yml
 
-    - name: Print facts
-      debug:
-        var: ansible_facts
-        verbosity: 1
+    - name: Server tasks
+      include_tasks:
+        file: tasks/server.yml
+      when: "'server' in inventory_hostname"
