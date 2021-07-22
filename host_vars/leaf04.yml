@@ -45,22 +45,20 @@ interfaces:
     - name: lo
       description: Loopback
       ip_addresses:
-        - 10.0.0.1/32
+        - 10.0.0.4/32
 
   vlans:
     - name: vlan10
       description: server01
       vlan_id: 10
       vrf: lab
-      ip_addresses:
-        - 192.168.1.1/24
+      ip_addresses: []
 
     - name: vlan11
       description: server02
       vlan_id: 11
       vrf: lab
-      ip_addresses:
-        - 192.168.2.1/24
+      ip_addresses: []
 
   bridges:
     - name: bridge
@@ -68,6 +66,5 @@ interfaces:
   vrfs:
     - name: lab
       l3vni: 403346
-
 bgp:
-  asn: 65001
+  asn: 65004

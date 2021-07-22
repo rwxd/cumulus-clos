@@ -21,6 +21,9 @@ all:
         server01:
         server02:
         server03:
+        server04:
+        server05:
+        server06:
   vars:
     #ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cumulus@worker21.air.cumulusnetworks.com -p 26860"'
     ansible_user: cumulus

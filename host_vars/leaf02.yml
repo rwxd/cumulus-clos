@@ -10,19 +10,19 @@ interfaces:
 
     - name: swp52
       description: spine02
-      enabled: false
+      enabled: true
+      mode: uplink
 
-      # mode: uplink
     - name: swp53
       description: spine03
-      enabled: false
+      enabled: true
+      mode: uplink
 
-      # mode: uplink
     - name: swp54
       description: spine04
-      enabled: false
+      enabled: true
+      mode: uplink
 
-      # mode: uplink
     - name: swp1
       description: server01
       mode: access
