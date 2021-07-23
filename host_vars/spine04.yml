@@ -30,6 +30,8 @@ interfaces:
 
   vlans: []
 
+  vxlans: []
+
   bridges:
     - name: bridge
 

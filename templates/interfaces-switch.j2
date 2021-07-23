@@ -71,6 +71,33 @@ iface {{ vlan.name }}
 
 {% endfor +%}
 
+## VXLANs
+{% for vxlan in interfaces.vxlans %}
+auto vni{{ vxlan.vni }}
+iface vni{{ vxlan.vni }}
+    bridge-access {{ vxlan.vlan }}
+    vxlan-id {{ vxlan.vni }}
+    vxlan-local-tunnelip {{ (interfaces.loopbacks[0].ip_addresses | ipv4() )[0] }}
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+    mtu 9166
+
+{% endfor %}
+{% for vrf in interfaces.vrfs %}
+auto vni{{ vrf.l3vni }}
+iface vni{{ vrf.l3vni }}
+    bridge-access {{ vrf.l3vlan }}
+    vxlan-id {{ vrf.l3vni }}
+    vxlan-local-tunnelip {{ (interfaces.loopbacks[0].ip_addresses | ipv4() )[0] }}
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    mstpctl-bpduguard yes
+    mstpctl-portbpdufilter yes
+{% endfor %}
+
+
 ## Bridges
 {% set bridge_vids = [] -%}
 {% for swp in interfaces.physicals -%}

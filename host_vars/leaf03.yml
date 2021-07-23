@@ -49,16 +49,34 @@ interfaces:
 
   vlans:
     - name: vlan10
-      description: server01
+      description: top
       vlan_id: 10
       vrf: lab
-      ip_addresses: []
+      ip_addresses:
+        - 192.168.1.1/24
 
     - name: vlan11
-      description: server02
+      description: mid
       vlan_id: 11
       vrf: lab
-      ip_addresses: []
+      ip_addresses:
+        - 192.168.2.1/24
+
+    - name: vlan12
+      description: bottom
+      vlan_id: 12
+      vrf: lab
+      ip_addresses:
+        - 192.168.3.1/24
+  vxlans:
+    - vni: 10010
+      vlan: 10
+
+    - vni: 10011
+      vlan: 11
+
+    - vni: 10012
+      vlan: 12
 
   bridges:
     - name: bridge
@@ -66,5 +84,6 @@ interfaces:
   vrfs:
     - name: lab
       l3vni: 403346
+      l3vlan: 3000
 bgp:
   asn: 65003
